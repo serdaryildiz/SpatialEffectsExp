@@ -1,35 +1,55 @@
-from PIL import Image, ImageDraw
-import random
+import cv2
 
-class RandomImageGenerator:
-    def __init__(self, width, height, num_circles):
-        self.width = width
-        self.height = height
-        self.num_circles = num_circles
-        self.image = Image.new("RGB", (width, height), "black")
-        self.draw = ImageDraw.Draw(self.image)
+from Dataset.circles import RandomCircleGenerator
 
-    def draw_random_circles(self):
-        for _ in range(self.num_circles):
-            radius = random.randint(10, 50)
-            x = random.randint(radius, self.width - radius)
-            y = random.randint(radius, self.height - radius)
-            color = "white"
-            self.draw_circle(x, y, radius, color)
 
-    def draw_circle(self, x, y, radius, color):
-        left_top = (x - radius, y - radius)
-        right_bottom = (x + radius, y + radius)
-        bounding_box = [left_top, right_bottom]
-        self.draw.ellipse(bounding_box, fill=color, outline=color)
+def circle_generator_test():
+    parameters = {
+        "line_width": 0,
+        "fill": "white",
+        "circle_color": "white",
+        "background_color": "black",
+        "radius": 10,
+        "num_circles": 1,
+        "image_height": 512,
+        "image_width": 512,
+    }
 
-    def save_image(self, filename):
-        self.image.save(filename)
+    circleGenerator = RandomCircleGenerator(**parameters)
 
-# Example usage:
-width = 500
-height = 500
-num_circles = 10
-image_generator = RandomImageGenerator(width, height, num_circles)
-image_generator.draw_random_circles()
-image_generator.save_image("random_image.png")
+    for _ in range(10):
+        img = circleGenerator.get_random_image()
+        cv2.imshow("", img[..., ::-1])
+        cv2.waitKey(0)
+
+    parameters["fill"] = "black"
+    circleGenerator = RandomCircleGenerator(**parameters)
+
+    for _ in range(10):
+        img = circleGenerator.get_random_image()
+        cv2.imshow("", img[..., ::-1])
+        cv2.waitKey(0)
+
+    parameters["radius"] = None
+    parameters["radius_min"] = 10
+    parameters["radius_max"] = 100
+    circleGenerator = RandomCircleGenerator(**parameters)
+
+    for _ in range(10):
+        img = circleGenerator.get_random_image()
+        cv2.imshow("", img[..., ::-1])
+        cv2.waitKey(0)
+
+    parameters["line_width"] = 10
+    circleGenerator = RandomCircleGenerator(**parameters)
+
+    for _ in range(10):
+        img = circleGenerator.get_random_image()
+        cv2.imshow("", img[..., ::-1])
+        cv2.waitKey(0)
+
+    return
+
+
+if __name__ == '__main__':
+    circle_generator_test()
