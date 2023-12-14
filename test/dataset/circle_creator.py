@@ -5,7 +5,7 @@ from Dataset.circles import RandomCircleGenerator
 
 def circle_generator_test():
     parameters = {
-        "line_width": 0,
+        "line_width": 1,
         "fill": "white",
         "circle_color": "white",
         "background_color": "black",
@@ -15,36 +15,36 @@ def circle_generator_test():
         "image_width": 512,
     }
 
-    circleGenerator = RandomCircleGenerator(**parameters)
+    circle_generator = RandomCircleGenerator(**parameters)
 
     for _ in range(10):
-        img = circleGenerator.get_random_image()
+        img = circle_generator.get_random_image()
         cv2.imshow("", img[..., ::-1])
         cv2.waitKey(0)
 
     parameters["fill"] = "black"
-    circleGenerator = RandomCircleGenerator(**parameters)
+    circle_generator = RandomCircleGenerator(**parameters)
 
     for _ in range(10):
-        img = circleGenerator.get_random_image()
+        img = circle_generator.get_random_image()
         cv2.imshow("", img[..., ::-1])
         cv2.waitKey(0)
 
     parameters["radius"] = None
     parameters["radius_min"] = 10
     parameters["radius_max"] = 100
-    circleGenerator = RandomCircleGenerator(**parameters)
+    circle_generator = RandomCircleGenerator(**parameters)
 
     for _ in range(10):
-        img = circleGenerator.get_random_image()
+        img = circle_generator.get_random_image()
         cv2.imshow("", img[..., ::-1])
         cv2.waitKey(0)
 
     parameters["line_width"] = 10
-    circleGenerator = RandomCircleGenerator(**parameters)
+    circle_generator = RandomCircleGenerator(**parameters)
 
     for _ in range(10):
-        img = circleGenerator.get_random_image()
+        img = circle_generator.get_random_image()
         cv2.imshow("", img[..., ::-1])
         cv2.waitKey(0)
 
